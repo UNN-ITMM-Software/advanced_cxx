@@ -1,8 +1,10 @@
 # Advanced C++
 
-## Structure
-* docs - slides and similar stuff.
-* tasks - tasks formulations and solutions.
+## Lectures
+1. [Binary search](docs/01.Binary_search.pdf)
+2. [Linking](docs/02.Linking.pdf)
+
+## Tasks
 
 ## Merging an upstream repository into your fork (master branch)
 
