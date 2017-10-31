@@ -5,6 +5,7 @@
 2. [Linking](docs/02.Linking.pdf)
 
 ## Tasks
+1. [Sqrt](tasks/lc_69_sqrt/README.md)
 
 ## Merging an upstream repository into your fork (master branch)
 
