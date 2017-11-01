@@ -16,3 +16,4 @@ A solution set is:
 ```
 
 # Solutions
+* Burte-force through pairs of values, find a third one with binary search. Asymptote is `O(n^2 \log^2 n)` due to deduplicating returns by storing them into a `std::set`. Input sequence is left uncompressed.
