@@ -6,6 +6,7 @@
 
 ## Tasks
 1. [Sqrt](tasks/lc_69_sqrt/README.md)
+2. [3Sum](tasks/lc_15_3sum/README.md)
 
 ## Merging an upstream repository into your fork (master branch)
 
