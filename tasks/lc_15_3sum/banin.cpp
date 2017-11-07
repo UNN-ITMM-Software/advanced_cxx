@@ -11,7 +11,7 @@ public:
         sort(nums.begin(), nums.end());
         set<vector<int>> ans;
         // Might want to squash repetitions for nums with many repeating values
-        // $O(n^2)$ search * $O(\log^2 n)$ binary search and set insertion
+        // $O(n^2)$ search * $O(\log n)$ binary search and set insertion
         for(auto it = nums.begin(); it != nums.end(); ++it){
             // Not iteration with :, since you can't quite cut corners as effectively
             for(auto jt = it + 1; jt != nums.end(); ++jt){
