@@ -1,14 +1,16 @@
 class Solution {
 public:
     void filterNums(std::vector<int> &nums, std::vector<int> &count) {
-        std::vector<int> new_nums;
-        new_nums.reserve(nums.size());
-        count.reserve(nums.size());
+        using std::vector;
+        vector<int> new_nums;
+        auto size = nums.size();
+        new_nums.reserve(size);
+        count.reserve(size);
         int prev = INT_MIN;
         for (auto &num: nums) {
             if (num != prev) {
                 new_nums.push_back(num);
-                count.push_back(0);
+                count.emplace_back(0);
             }
             ++count.back();
             prev = num;
@@ -18,20 +20,24 @@ public:
     }
 
 
-
-std::vector<std::vector<int>> threeSum(std::vector<int>& nums) {
-    std::sort(nums.begin(), nums.end());
-    std::vector<std::vector<int>> three_sum;
-    if (nums.size() < 3) {
+    using std::vector;
+    using std::sort;
+    auto size = nums.size();
+    auto begin = nums.begin();
+    auto end = nums.end();
+    vector<vector<int>> threeSum(vector<int>& nums) {
+    sort(begin, end);
+    vector<vector<int>> three_sum;
+    if (size < 3) {
         return three_sum;
     }
     
-    std::vector<int> count;
+    vector<int> count;
     filterNums(nums, count);
-
-    size_t nums_count = nums.size();
+    
+    auto nums_count = size;
     three_sum.reserve(nums_count * nums_count);
-    size_t idx[] = {0, 0, nums_count - 1};
+    auto idx[] = {0, 0, nums_count - 1};
     if (count[idx[0]] == 1) {
         ++idx[1];
     }
