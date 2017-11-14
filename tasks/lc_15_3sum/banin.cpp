@@ -7,21 +7,24 @@ public:
     std::vector<std::vector<int>> threeSum(std::vector<int>& nums) {
         using std::set;
         using std::vector;
-
-        sort(nums.begin(), nums.end());
+        auto begin = nums.begin();
+        auto end = nums.end();
+        sort(begin, end);
         set<vector<int>> ans;
         // Might want to squash repetitions for nums with many repeating values
         // $O(n^2)$ search * $O(\log n)$ binary search and set insertion
-        for(auto it = nums.begin(); it != nums.end(); ++it){
+        for(auto it = begin; it != end); ++it){
             // Not iteration with :, since you can't quite cut corners as effectively
-            for(auto jt = it + 1; jt != nums.end(); ++jt){
+            for(auto jt = it + 1; jt != end; ++jt){
                 int a = *it, b = *jt, target = -(a + b);
-                auto kt = lower_bound(jt + 1, nums.end(), target);
-                if(kt != nums.end() && *kt == target){
+                auto kt = lower_bound(jt + 1, end, target);
+                if(kt != end && *kt == target){
                     ans.insert(vector<int>{a, b, *kt}); // Modern brace initializer
                 }
             }
         }
-        return vector<vector<int>>(ans.begin(), ans.end());
+        auto abegin = ans.begin();
+        auto aend = ans.end();
+        return vector<vector<int>>(abegin, aend);
     }
 };
