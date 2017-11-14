@@ -23,6 +23,6 @@ A solution set is:
 2. Obtain 2 vectors from input one: first contains sorted unique elements, second - counts of corresponding elements in input vector.
 3. Additional vector 'max_corresp_candidat_idx' for storage min checked third triple element index for a second element in triplet (initialized with nums.size() - 1).
 4. Check triplets of elements with 3 indices:
-  - idx[0] is increasing from min element index to max negative index,
-  - idx[1] is increasing from idx[0] and stops increasing when triplets is found or when idx[1] == idx[2],
-  - idx[2] is decreasing from max_corresp_candidat_idx[idx[1]] and stops decreasing when triples is found or when idx[1] == idx[2].
+  idx[0] is increasing from min element index to max negative index,
+  idx[1] is increasing from idx[0] and stops increasing when triplets is found or when idx[1] == idx[2],
+  idx[2] is decreasing from max_corresp_candidat_idx[idx[1]] and stops decreasing when triples is found or when idx[1] == idx[2].
