@@ -16,3 +16,4 @@ A solution set is:
 ```
 
 # Solutions
+1. Sort the array, consider all pairs (one iterator is set to the begin and the second iterator is set to the end), find the third element for triplet with binary_search between iterators. If iterator is moved to the repeated value, skip it. O(n^2 * log n)
