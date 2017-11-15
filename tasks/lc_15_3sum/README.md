@@ -16,10 +16,10 @@ A solution set is:
 ```
 
 # Solutions
-* Time complexity: `O(n!)`. [Link](gorunov1.cpp).
-Implementation based on permutations.
+* Time complexity: `O(n!)`. [Link](gorunov1.cpp). Shortest solution.
+Implementation is based on permutations.
 * Time complexity: `O(n^4)`.
-Implementation based on permutations. Use additional binary vector (size is equal to original vector) with only 3 elements equal to 1. Custom permutation implementation can reduce complexity to `O(n^3)`.
+Implementation is based on permutations. Use additional binary array (size is equal to original array) with only 3 elements equal to 1. Custom permutation implementation can reduce complexity to `O(n^3)`.
 * Time complexity: `O(n^2 * log^2 n)`. [Link](banin.cpp).
 Brute-force through pairs of values, find a third one with binary search. Asymptote is `O(n^2 * log^2 n)` due to deduplicating returns by storing them into a `std::set`. Input sequence is left uncompressed.
 * Time complexity: `O(n^2 * log n)`. [Link](gritsenko.cpp).
@@ -35,6 +35,6 @@ Sort the array and reduce task to 2-sum problem. Move first pointer `k` from lef
   idx[1] is increasing from idx[0] and stops increasing when triplets is found or when idx[1] == idx[2],
   idx[2] is decreasing from max_corresp_candidat_idx[idx[1]] and stops decreasing when triples is found or when idx[1] == idx[2].
 * Time complexity: `O(n^2)`. [Link](sidnev_unordered_map.cpp).
-Use `unorderd_map` to store elements and their quantity. 2 loops iterate over two elements i and j. The third element is found in the `unordered_map`.
+Use `unorderd_map` to store elements and their quantity. Two loops iterate over elements `i` and `j`. The third element `-[i] -[j]` is found in the `unordered_map`.
 * Time complexity: `O(n^2)`. [Link](sidnev.cpp).
 Sort the array and reduce task to 2-sum problem. Move first pointer `k` from left to right and solve 2-sum problem for other elements: `[i] + [j] = -[k]`.
