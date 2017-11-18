@@ -23,3 +23,6 @@ Example 2:
 Answer: 3
 
 # Solutions
+* Depth-first searrch
+* Breadth-first search
+* Maintaining which cell belongs to which island with a disjoint-set-union data structure
