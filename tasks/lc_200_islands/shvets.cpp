@@ -1,3 +1,8 @@
+/*
+Description: we asume all cells could be island. We move from top to the bootom from  left to the right 
+so possible lends in island can be only either on the left or on the right or on the bottom side of each cells
+we don`t need to check upper neighbor of the land. All visited lends willl be placed in vector visitedElements 
+*/
 #include <vector>
 class Solution{
 public:
@@ -37,30 +42,30 @@ public:
 
     void visitAllConnectedLands(int i, int j, vector< vector<char> >& grid, vector<vector<int> >& vE)
     {
-		int numLine = grid.size();
-		int numCall = grid[0].size();
+	int numLine = grid.size();
+	int numCall = grid[0].size();
 
-		vector<int> v(2);
-		v[0]=i; v[1]=j;
+	vector<int> v(2);
+	v[0]=i; v[1]=j;
 
-		if(grid[i][j]=='1' && !isElement(i,j,vE))
+	if(grid[i][j]=='1' && !isElement(i,j,vE))
+	{
+		//indicate that this elemen was visited
+		vE.push_back(v);
+
+		if(j > 0)
 		{
-				//indicate that this elemen was visited
-				vE.push_back(v);
-
-				if(j > 0)
-				{
-					visitAllConnectedLands(i, j-1, grid, vE);
-				}
-				if(j < (numCall - 1))
-				{
-					visitAllConnectedLands(i, j+1, grid, vE);
-				}
-
-				if(i < (numLine - 1))
-				{
-					visitAllConnectedLands(i+1, j, grid, vE);
-				}
+			visitAllConnectedLands(i, j-1, grid, vE);
 		}
+		if(j < (numCall - 1))
+		{
+			visitAllConnectedLands(i, j+1, grid, vE);
+		}
+
+		if(i < (numLine - 1))
+		{
+			visitAllConnectedLands(i+1, j, grid, vE);
+		}
+	}
     }
 };
