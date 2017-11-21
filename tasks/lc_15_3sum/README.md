@@ -15,6 +15,8 @@ A solution set is:
 ]
 ```
 
+# [Presentation](../../docs/04.3sum.pdf)
+
 # Solutions
 * Time complexity: `O(n!)`. [Link](gorunov1.cpp). Shortest solution.
 Implementation is based on permutations.
@@ -34,7 +36,7 @@ Sort the array and reduce task to 2-sum problem. Move first pointer `k` from lef
   idx[0] is increasing from min element index to max negative index,
   idx[1] is increasing from idx[0] and stops increasing when triplets is found or when idx[1] == idx[2],
   idx[2] is decreasing from max_corresp_candidat_idx[idx[1]] and stops decreasing when triples is found or when idx[1] == idx[2].
-* Time complexity: `O(n^2)`. [Link](sidnev_unordered_map.cpp).
-Use `unorderd_map` to store elements and their quantity. Two loops iterate over elements `i` and `j`. The third element `-[i] -[j]` is found in the `unordered_map`.
+* Time complexity: `O(n^2)`. [Link](sidnev_unordered_map.cpp), [faster std::unordered_map solution](Ruslan_Arutyunyan.cpp).
+Use `std::unorderd_map` to store elements and their quantity. Two loops iterate over elements `i` and `j`. The third element `-[i] -[j]` is found in the `unordered_map`.
 * Time complexity: `O(n^2)`. [Link](sidnev.cpp).
 Sort the array and reduce task to 2-sum problem. Move first pointer `k` from left to right and solve 2-sum problem for other elements: `[i] + [j] = -[k]`.

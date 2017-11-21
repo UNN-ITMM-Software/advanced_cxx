@@ -1,11 +1,11 @@
 # Advanced C++
 
-## Lectures
-1. [Binary search](docs/01.Binary_search.pdf)
-2. [Sqrt. Static, extern](docs/02.Static,extern.pdf)
-3. [Motivation](docs/03.Motivation.pdf)
-4. [3Sum. Linking](docs/04.Linking.pdf)
-5. [constexpr](docs/05.xxx.pdf)
+## Seminars
+1. [Binary search](docs/01.binary_search.pdf)
+2. [Static, extern](docs/02.static.pdf)
+3. [Motivation](docs/03.motivation.pdf)
+4. [Application linking and execution](docs/04.execution.pdf)
+5. [constexpr](docs/05.constexpr.pdf)
 6. [Singleton](docs/06.xxx.pdf)
 7. [Objects layout in memory](docs/07.xxx.pdf)
 
