@@ -16,3 +16,4 @@ Output: [1, 3, 9]
 ```
 
 # Solutions
+* Depth-first or Breadth-first search: O(n) - complexity, O(h) - memory if using stack or queue
