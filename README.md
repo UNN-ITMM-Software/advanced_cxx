@@ -5,10 +5,11 @@
 2. [Static, extern](docs/02.static.pdf)
 3. [Motivation](docs/03.motivation.pdf)
 4. [Application linking and execution](docs/04.execution.pdf)
-5. [constexpr](docs/05.constexpr.pdf)
+5. [constexpr](docs/05.constexpr.pdf), [constexpr example](docs/05.constexpr_example.pdf)
 6. [Singleton](docs/06.singletone.pdf)
 7. [Objects layout in memory](docs/07.xxx.pdf)
-
+8. [R-value and move semantics](docs/08.xxx.pdf)
+9. TBD...
 
 ## Tasks
 1. [Sqrt](tasks/lc_69_sqrt/README.md)
