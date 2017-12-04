@@ -6,7 +6,7 @@
 3. [Motivation](docs/03.motivation.pdf)
 4. [Application linking and execution](docs/04.execution.pdf)
 5. [constexpr](docs/05.constexpr.pdf)
-6. [Singleton](docs/06.xxx.pdf)
+6. [Singleton](docs/06.singletone.pdf)
 7. [Objects layout in memory](docs/07.xxx.pdf)
 
 
