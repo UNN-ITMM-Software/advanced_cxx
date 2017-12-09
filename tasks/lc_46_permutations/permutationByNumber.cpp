@@ -29,7 +29,7 @@ public:
 				    swap(nums,i,i+j-1);
 				    if(k >= (j-1)*factorial(nPost-1))
 				      k = k - (j-1)*factorial(nPost-1);
-            nPost -= 1;   
+           			    nPost -= 1;   
 				    break;
 			    }
 		    }
