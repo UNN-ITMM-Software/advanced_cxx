@@ -1,11 +1,11 @@
-/*  Р—Р°РґР°РЅ РјР°СЃСЃРёРІ С†РµР»С‹С… С‡РёСЃРµР» (С‚РёРї int). РќСѓР¶РЅРѕ РЅР°Р№С‚Рё, РµСЃР»Рё Р»Рё РІ РјР°СЃСЃРёРІРµ С‚Р°РєРѕРµ С‡РёСЃР»Рѕ, С‡С‚Рѕ РєРѕР»РёС‡РµСЃС‚РІРѕ С‡РёСЃРµР» РјРµРЅСЊС€РёС… РґР°РЅРЅРѕРіРѕ С‡РёСЃР»Р° СЂР°РІРЅРѕ Р·Р°РґР°РЅРЅРѕРјСѓ С‡РёСЃР»Сѓ. РСЃРєРѕРјРѕРµ С‡РёСЃР»Рѕ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РјР°РєСЃРёРјР°Р»СЊРЅС‹Рј.
-РџСЂРёРјРµСЂС‹:
-[1,1,1,3] - РѕС‚РІРµС‚ 3 (СЂРѕРІРЅРѕ 3 С‡РёСЃР»Р° РјРµРЅСЊС€Рµ С‚СЂРµС…)
-[1,3,1,1] - РѕС‚РІРµС‚ 3
-[0,3,1,2] - РѕС‚РІРµС‚ 3 (РѕРґРЅРѕ С‡РёСЃР»Рѕ РјРµРЅСЊС€Рµ РµРґРёРЅРёС†С‹, РґРІР° С‡РёСЃР»Р° РјРµРЅСЊС€Рµ РґРІРѕР№РєРё Рё С‚СЂРё С‡РёСЃР»Р° РјРµРЅСЊС€Рµ С‚СЂРѕР№РєРё, РЅРѕ С‚СЂРѕР№РєР° РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ РёР· РЅРёС…, РїРѕСЌС‚РѕРјСѓ РѕС‚РІРµС‚ С‚СЂРё)
-[12,1,6] - РѕС‚РІРµС‚ 0
-[1] - РѕС‚РІРµС‚ 0
-[1,1] - РѕС‚РІРµС‚ 0
+/*  Задан массив целых чисел (тип int). Нужно найти, если ли в массиве такое число, что количество чисел меньших данного числа равно заданному числу. Искомое число должно быть максимальным.
+Примеры:
+[1,1,1,3] - ответ 3 (ровно 3 числа меньше трех)
+[1,3,1,1] - ответ 3
+[0,3,1,2] - ответ 3 (одно число меньше единицы, два числа меньше двойки и три числа меньше тройки, но тройка максимальная из них, поэтому ответ три)
+[12,1,6] - ответ 0
+[1] - ответ 0
+[1,1] - ответ 0
 */
 
 #include <functional>
@@ -13,6 +13,8 @@
 #include <vector>
 #include <set>
 #include <cassert>
+#include <iostream>
+#include "measure.h"
 
 namespace SimpleSolution
 {
@@ -68,6 +70,11 @@ namespace MultisetSolution
 {
 	int32_t run(const std::vector<int32_t>& values)
 	{
+		if (values.size() < 2)
+		{
+			return 0;
+		}
+
 		// O(n*log(n))
 		std::multiset<int32_t, std::greater<int32_t>> sortValues(values.cbegin(), values.cend());
 
@@ -90,7 +97,7 @@ namespace IndexOrientedSolution
 {
 	int32_t run(const std::vector<int32_t>& values)
 	{
-		if (values.empty())
+		if (values.size() < 2)
 		{
 			return 0;
 		}
@@ -131,6 +138,7 @@ namespace IndexOrientedSolution
 
 int main()
 {
+	// correctness tests
 	std::vector<std::vector<int32_t>> testValues = {
 		{ 4, 5, 3, 3, 3, 3, 3, 7, 7 },
 		{ 5, -1, 4, 7, -1, 4, 17, 6, 1, 3 },
@@ -154,5 +162,46 @@ int main()
 		assert(b_v == testResults[i]);
 		auto i_v = IndexOrientedSolution::run(testValues[i]);
 		assert(i_v == testResults[i]);
+	}
+
+	// performance tests
+	testValues.clear();
+	std::vector<int32_t> bigVector;
+	for (int i = 0; i < 10000000; ++i)
+		bigVector.push_back(i);
+
+	// ascending order
+	testValues.push_back(bigVector);
+	
+	// descending order
+	std::reverse(bigVector.begin(), bigVector.end());
+	testValues.push_back(bigVector);
+
+	// random order
+	std::random_shuffle(bigVector.begin(), bigVector.end());
+	testValues.push_back(bigVector);
+
+	// randor order
+	std::random_shuffle(bigVector.begin(), bigVector.end());
+	testValues.push_back(bigVector);
+
+	// randor order
+	std::random_shuffle(bigVector.begin(), bigVector.end());
+	testValues.push_back(bigVector);
+
+	// randor order
+	std::random_shuffle(bigVector.begin(), bigVector.end());
+	testValues.push_back(bigVector);
+	for (auto i = 0; i <  testValues.size(); ++i)
+	{
+		std::cout << "\nTest #" << i << "\n";
+		auto time = measure::execution(SimpleSolution::run, testValues[i]);
+		std::cout << "SimpleSolution: " << time << "s \n";
+		time = measure::execution(MultisetSolution::run, testValues[i]);
+		std::cout << "MultisetSolution: " << time << "s \n";
+		time = measure::execution(BinaryHeapSolution::run, testValues[i]);
+		std::cout << "BinaryHeapSolution: " << time << "s \n";
+		time = measure::execution(IndexOrientedSolution::run, testValues[i]);
+		std::cout << "IndexOrientedSolution: " << time << "s \n";
 	}
 }
