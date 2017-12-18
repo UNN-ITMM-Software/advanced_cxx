@@ -1,6 +1,8 @@
 #pragma once
 #include <chrono>
+#if defined(_OPENMP)
 #include <omp.h>
+#endif
 
 namespace measure
 {

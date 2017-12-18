@@ -178,14 +178,15 @@ int main()
 	}
 
 	// performance tests
+	const int32_t N = 1000000;
 	testValues.clear();
 	std::vector<int32_t> bigVector;
-	for (int i = 0; i < 10000000; ++i)
+	for (int i = 0; i < N; ++i)
 		bigVector.push_back(i);
 
 	// ascending order
 	testValues.push_back(bigVector);
-	
+
 	// descending order
 	std::reverse(bigVector.begin(), bigVector.end());
 	testValues.push_back(bigVector);
@@ -206,40 +207,44 @@ int main()
 	std::random_shuffle(bigVector.begin(), bigVector.end());
 	testValues.push_back(bigVector);
 
-	for (auto i = 0; i < testValues.size(); ++i)
+	// vector with repeated elements
+	bigVector = std::vector<int32_t>(N, 4);
+	testValues.push_back(bigVector);
+
+	// vector with repeated elements with values greater than the vector size
+	bigVector = std::vector<int32_t>(N, N * 2);
+	testValues.push_back(bigVector);
+
+	// vector half filled with repeating elements with values greater than the vector size
+	bigVector = std::vector<int32_t>(N / 2, N * 3);
+	for (int i = N / 2; i < N; ++i)
 	{
-		const int32_t count = 50;
-		std::cout << "\nTest #" << i << "\n";
-
-		auto time = measure::chrono::execution(count, SimpleSolution::run, testValues[i]);
-		std::cout << "SimpleSolution: " << time << " ms \n";
-
-		time = measure::chrono::execution(count, MultisetSolution::run, testValues[i]);
-		std::cout << "MultisetSolution: " << time << " ms \n";
-
-		time = measure::chrono::execution(count, BinaryHeapSolution::run, testValues[i]);
-		std::cout << "BinaryHeapSolution: " << time << " ms \n";
-
-		time = measure::chrono::execution(count, IndexOrientedSolution::run, testValues[i]);
-		std::cout << "IndexOrientedSolution: " << time << " ms \n";
+		bigVector.push_back(i);
 	}
-#if defined(_OPENMP)
+	testValues.push_back(bigVector);
+
+	std::cout << "Chrono\n";
+	std::cout << "\t\tSimple\t\tM-Set\t\tBinHeap\t\tIndexOr-d\t\t\n\n";
+	const int32_t count = 50;
 	for (auto i = 0; i < testValues.size(); ++i)
 	{
-		const int32_t count = 50;
-		std::cout << "\nTest #" << i << "\n";
+		std::cout << i << "\t\t";
+		std::cout << measure::chrono::execution(count, SimpleSolution::run, testValues[i]) << "ms \t\t"
+			<< measure::chrono::execution(count, MultisetSolution::run, testValues[i]) << "ms \t\t"
+			<< measure::chrono::execution(count, BinaryHeapSolution::run, testValues[i]) << "ms \t\t"
+			<< measure::chrono::execution(count, IndexOrientedSolution::run, testValues[i]) << "ms \t\t\n";
+	}
 
-		auto time = measure::omp::execution(count, SimpleSolution::run, testValues[i]);
-		std::cout << "SimpleSolution: " << time << " ms \n";
-
-		time = measure::omp::execution(count, MultisetSolution::run, testValues[i]);
-		std::cout << "MultisetSolution: " << time << " ms \n";
-
-		time = measure::omp::execution(count, BinaryHeapSolution::run, testValues[i]);
-		std::cout << "BinaryHeapSolution: " << time << " ms \n";
-
-		time = measure::omp::execution(count, IndexOrientedSolution::run, testValues[i]);
-		std::cout << "IndexOrientedSolution: " << time << " ms \n";
+#if defined(_OPENMP)
+	std::cout << "OMP\n";
+	std::cout << "\t\tSimple\t\tM-Set\t\tBinHeap\t\tIndexOr-d\t\t\n\n";
+	for (auto i = 0; i < testValues.size(); ++i)
+	{
+		std::cout << i << "\t\t";
+		std::cout << measure::omp::execution(count, SimpleSolution::run, testValues[i]) << "ms \t\t"
+			<< measure::omp::execution(count, MultisetSolution::run, testValues[i]) << "ms \t\t"
+			<< measure::omp::execution(count, BinaryHeapSolution::run, testValues[i]) << "ms \t\t"
+			<< measure::omp::execution(count, IndexOrientedSolution::run, testValues[i]) << "ms \t\t\n";
 	}
 #endif
 }
