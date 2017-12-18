@@ -1,0 +1,2 @@
+task: task.cpp
+	g++ -o task task.cpp -O2 -std=c++11 -fopenmp

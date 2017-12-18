@@ -14,6 +14,7 @@
 #include <set>
 #include <cassert>
 #include <iostream>
+#include <map>
 #include "measure.h"
 
 namespace SimpleSolution
@@ -121,9 +122,9 @@ namespace IndexOrientedSolution
 		// O(n)
 		for (auto val : values)
 		{
-			if (val < 0 || val < size)
+			val = val < 0 ? 0 : val;
+			if (val < size)
 			{
-				val = val < 0 ? 0 : val;
 				++valueCounts[val];
 			}
 			else
@@ -152,68 +153,68 @@ namespace IndexOrientedSolution
 int main()
 {
 	// correctness tests
-	std::vector<std::vector<int32_t>> testValues = {
-		{ 4, 5, 3, 3, 3, 3, 3, 7, 7 },
-		{ 5, -1, 4, 7, -1, 4, 17, 6, 1, 3 },
-		{ -1 },
-		{ 0 },
-		{ -4, -3, -2, -1, 5, 5, 5, -1 },
-		{ 1, 1, 1, 1, 1 },
-		{ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 },
-		{ 17, 17, 17 }
+	std::map<std::vector<int32_t>, int32_t> correctnessTests = {
+		{ { 4, 5, 3, 3, 3, 3, 3, 7, 7 }, 7 },
+		{ { 5, -1, 4, 7, -1, 4, 17, 6, 1, 3 }, 4 },
+		{ { -1 }, 0 },
+		{ { 0 }, 0 },
+		{ { -4, -3, -2, -1, 5, 5, 5, -1 }, 5 },
+		{ { 1, 1, 1, 1, 1 }, 0 },
+		{ { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }, 10 },
+		{ { 17, 17, 17 }, 0 }
 	};
 
-	std::vector<int32_t> testResults = { 7, 4, 0, 0, 5, 0, 10, 0 };
-
-	for (auto i = 0; i < testValues.size(); ++i)
+	for (const auto& it : correctnessTests)
 	{
-		auto s_v = SimpleSolution::run(testValues[i]);
-		assert(s_v == testResults[i]);
-		auto m_v = MultisetSolution::run(testValues[i]);
-		assert(m_v == testResults[i]);
-		auto b_v = BinaryHeapSolution::run(testValues[i]);
-		assert(b_v == testResults[i]);
-		auto i_v = IndexOrientedSolution::run(testValues[i]);
-		assert(i_v == testResults[i]);
+		const auto& test = it.first;
+		const auto& result = it.second;
+		auto s_v = SimpleSolution::run(test);
+		assert(s_v == result);
+		auto m_v = MultisetSolution::run(test);
+		assert(m_v == result);
+		auto b_v = BinaryHeapSolution::run(test);
+		assert(b_v == result);
+		auto i_v = IndexOrientedSolution::run(test);
+		assert(i_v == result);
 	}
 
 	// performance tests
 	const int32_t N = 10000000;
-	testValues.clear();
+	std::vector <std::vector<int32_t>> performanceTests;
 	std::vector<int32_t> bigVector;
 	for (int i = 0; i < N; ++i)
 		bigVector.push_back(i);
 
 	// ascending order
-	testValues.push_back(bigVector);
+	performanceTests.push_back(bigVector);
 
 	// descending order
 	std::reverse(bigVector.begin(), bigVector.end());
-	testValues.push_back(bigVector);
+	performanceTests.push_back(bigVector);
 
 	// random order
 	std::random_shuffle(bigVector.begin(), bigVector.end());
-	testValues.push_back(bigVector);
+	performanceTests.push_back(bigVector);
 
 	// random order
 	std::random_shuffle(bigVector.begin(), bigVector.end());
-	testValues.push_back(bigVector);
+	performanceTests.push_back(bigVector);
 
 	// random order
 	std::random_shuffle(bigVector.begin(), bigVector.end());
-	testValues.push_back(bigVector);
+	performanceTests.push_back(bigVector);
 
 	// random order
 	std::random_shuffle(bigVector.begin(), bigVector.end());
-	testValues.push_back(bigVector);
+	performanceTests.push_back(bigVector);
 
 	// vector with repeated elements
 	bigVector = std::vector<int32_t>(N, 4);
-	testValues.push_back(bigVector);
+	performanceTests.push_back(bigVector);
 
 	// vector with repeated elements with values greater than the vector size
 	bigVector = std::vector<int32_t>(N, N * 2);
-	testValues.push_back(bigVector);
+	performanceTests.push_back(bigVector);
 
 	// vector half filled with repeating elements with values greater than the vector size
 	bigVector = std::vector<int32_t>(N / 2, N * 3);
@@ -221,30 +222,30 @@ int main()
 	{
 		bigVector.push_back(i);
 	}
-	testValues.push_back(bigVector);
+	performanceTests.push_back(bigVector);
 
 	std::cout << "Chrono\n";
 	std::cout << "\t\tSimple\t\tM-Set\t\tBinHeap\t\tIndexOr-d\t\t\n\n";
 	const int32_t count = 50;
-	for (auto i = 0; i < testValues.size(); ++i)
+	for (auto i = 0; i < performanceTests.size(); ++i)
 	{
 		std::cout << i << "\t\t";
-		std::cout << measure::chrono::execution(count, SimpleSolution::run, testValues[i]) << "ms \t\t"
-			<< measure::chrono::execution(count, MultisetSolution::run, testValues[i]) << "ms \t\t"
-			<< measure::chrono::execution(count, BinaryHeapSolution::run, testValues[i]) << "ms \t\t"
-			<< measure::chrono::execution(count, IndexOrientedSolution::run, testValues[i]) << "ms \t\t\n";
+		std::cout << measure::chrono::execution(count, SimpleSolution::run, performanceTests[i]) << "ms \t\t"
+			<< measure::chrono::execution(count, MultisetSolution::run, performanceTests[i]) << "ms \t\t"
+			<< measure::chrono::execution(count, BinaryHeapSolution::run, performanceTests[i]) << "ms \t\t"
+			<< measure::chrono::execution(count, IndexOrientedSolution::run, performanceTests[i]) << "ms \t\t\n";
 	}
 
 #if defined(_OPENMP)
 	std::cout << "OMP\n";
 	std::cout << "\t\tSimple\t\tM-Set\t\tBinHeap\t\tIndexOr-d\t\t\n\n";
-	for (auto i = 0; i < testValues.size(); ++i)
+	for (auto i = 0; i < performanceTests.size(); ++i)
 	{
 		std::cout << i << "\t\t";
-		std::cout << measure::omp::execution(count, SimpleSolution::run, testValues[i]) << "ms \t\t"
-			<< measure::omp::execution(count, MultisetSolution::run, testValues[i]) << "ms \t\t"
-			<< measure::omp::execution(count, BinaryHeapSolution::run, testValues[i]) << "ms \t\t"
-			<< measure::omp::execution(count, IndexOrientedSolution::run, testValues[i]) << "ms \t\t\n";
+		std::cout << measure::omp::execution(count, SimpleSolution::run, performanceTests[i]) << "ms \t\t"
+			<< measure::omp::execution(count, MultisetSolution::run, performanceTests[i]) << "ms \t\t"
+			<< measure::omp::execution(count, BinaryHeapSolution::run, performanceTests[i]) << "ms \t\t"
+			<< measure::omp::execution(count, IndexOrientedSolution::run, performanceTests[i]) << "ms \t\t\n";
 	}
 #endif
 }
