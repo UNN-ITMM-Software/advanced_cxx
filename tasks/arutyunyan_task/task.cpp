@@ -25,8 +25,10 @@ namespace SimpleSolution
 			return 0;
 		}
 
+		//O(nlog(n))
 		std::sort(v.begin(), v.end());
 
+		//O(n)
 		for (auto index = v.size() - 1; index > 0; --index)
 		{
 			if (v[index] == index && v[index - 1] != index)
@@ -34,33 +36,6 @@ namespace SimpleSolution
 				return v[index];
 			}
 		}
-
-		return 0;
-	}
-}
-
-namespace BinaryHeapSolution
-{
-	int32_t run(std::vector<int32_t> v)
-	{
-		if (v.size() < 2)
-		{
-			return 0;
-		}
-
-		std::make_heap(v.begin(), v.end());
-
-		while (v.size() > 2)
-		{
-			if (v[0] == v.size() - 1 && v[0] != v[1] && v[0] != v[2])
-			{
-				return v[0];
-			}
-			std::pop_heap(v.begin(), v.end());
-			v.pop_back();
-		}
-
-		if ((v[0] != v[1]) && (v[0] == 1 || v[1] == 1)) return 1;
 
 		return 0;
 	}
@@ -92,6 +67,44 @@ namespace MultisetSolution
 		return 0;
 	}
 };
+
+namespace BinaryHeapSolution
+{
+	int32_t run(std::vector<int32_t> v)
+	{
+		if (v.size() < 2)
+		{
+			return 0;
+		}
+		else if (v.size() == 2)
+		{
+			int32_t el;
+			if (((el = (v[0] > v[1] ? v[0] : v[1]))) == 1 && v[0] != v[1])
+			{
+				return 1;
+			}
+		}
+		else
+		{
+			//O(n)
+			std::make_heap(v.begin(), v.end());
+
+			//O(n*log(n))
+			while (v.size() > 2)
+			{
+				if (v[0] == v.size() - 1 && v[0] != v[1] && v[0] != v[2])
+				{
+					return v[0];
+				}
+				//O(log(n))
+				std::pop_heap(v.begin(), v.end());
+				//O(1)
+				v.pop_back();
+			}
+		}
+		return 0;
+	}
+}
 
 namespace IndexOrientedSolution
 {
@@ -192,16 +205,41 @@ int main()
 	// random order
 	std::random_shuffle(bigVector.begin(), bigVector.end());
 	testValues.push_back(bigVector);
-	for (auto i = 0; i <  testValues.size(); ++i)
+
+	for (auto i = 0; i < testValues.size(); ++i)
 	{
+		const int32_t count = 50;
 		std::cout << "\nTest #" << i << "\n";
-		auto time = measure::execution(SimpleSolution::run, testValues[i]);
-		std::cout << "SimpleSolution: " << time << "s \n";
-		time = measure::execution(MultisetSolution::run, testValues[i]);
-		std::cout << "MultisetSolution: " << time << "s \n";
-		time = measure::execution(BinaryHeapSolution::run, testValues[i]);
-		std::cout << "BinaryHeapSolution: " << time << "s \n";
-		time = measure::execution(IndexOrientedSolution::run, testValues[i]);
-		std::cout << "IndexOrientedSolution: " << time << "s \n";
+
+		auto time = measure::chrono::execution(count, SimpleSolution::run, testValues[i]);
+		std::cout << "SimpleSolution: " << time << " ms \n";
+
+		time = measure::chrono::execution(count, MultisetSolution::run, testValues[i]);
+		std::cout << "MultisetSolution: " << time << " ms \n";
+
+		time = measure::chrono::execution(count, BinaryHeapSolution::run, testValues[i]);
+		std::cout << "BinaryHeapSolution: " << time << " ms \n";
+
+		time = measure::chrono::execution(count, IndexOrientedSolution::run, testValues[i]);
+		std::cout << "IndexOrientedSolution: " << time << " ms \n";
 	}
+#if defined(_OPENMP)
+	for (auto i = 0; i < testValues.size(); ++i)
+	{
+		const int32_t count = 50;
+		std::cout << "\nTest #" << i << "\n";
+
+		auto time = measure::omp::execution(count, SimpleSolution::run, testValues[i]);
+		std::cout << "SimpleSolution: " << time << " ms \n";
+
+		time = measure::omp::execution(count, MultisetSolution::run, testValues[i]);
+		std::cout << "MultisetSolution: " << time << " ms \n";
+
+		time = measure::omp::execution(count, BinaryHeapSolution::run, testValues[i]);
+		std::cout << "BinaryHeapSolution: " << time << " ms \n";
+
+		time = measure::omp::execution(count, IndexOrientedSolution::run, testValues[i]);
+		std::cout << "IndexOrientedSolution: " << time << " ms \n";
+	}
+#endif
 }
