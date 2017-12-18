@@ -178,7 +178,7 @@ int main()
 	}
 
 	// performance tests
-	const int32_t N = 1000000;
+	const int32_t N = 10000000;
 	testValues.clear();
 	std::vector<int32_t> bigVector;
 	for (int i = 0; i < N; ++i)
