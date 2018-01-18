@@ -14,7 +14,7 @@
 ## Tasks
 1. [Sqrt](tasks/lc_69_sqrt/README.md)
 2. [3Sum](tasks/lc_15_3sum/README.md)
-3. [Number of Islands](tasks/lc_200_islands/README.md)
+3. [Number of Islands](tasks/lc_200_islands/README.md) [Number of Islands as presented](docs/05.islands.pdf)
 4. [Find Largest Value in Each Tree Row](tasks/lc_515_tree_row/README.md)
 5. [Permutations](tasks/lc_46_permutations/README.md)
 6. TBD...
