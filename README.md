@@ -8,6 +8,7 @@
 5. [constexpr](docs/05.constexpr.pdf), [constexpr example](docs/05.constexpr_example.pdf)
 6. [Singleton](docs/06.singletone.pdf)
 7. Objects layout in memory
+
 8, 9. R-value and move semantics
 10. [Order statistics](docs/10.nth_element.pdf)
 11. TBD...
