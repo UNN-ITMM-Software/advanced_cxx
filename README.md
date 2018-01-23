@@ -9,6 +9,7 @@
 1. [Singleton](docs/06.singletone.pdf)
 1. Objects layout in memory
 1. R-value and move semantics
+1. (cont).
 1. [Order statistics](docs/10.nth_element.pdf)
 1. TBD...
 
