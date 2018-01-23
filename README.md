@@ -2,16 +2,15 @@
 
 ## Seminars
 1. [Binary search](docs/01.binary_search.pdf)
-2. [Static, extern](docs/02.static.pdf)
-3. [Motivation](docs/03.motivation.pdf)
-4. [Application linking and execution](docs/04.execution.pdf)
-5. [constexpr](docs/05.constexpr.pdf), [constexpr example](docs/05.constexpr_example.pdf)
-6. [Singleton](docs/06.singletone.pdf)
-7. Objects layout in memory
-
-8, 9. R-value and move semantics
-10. [Order statistics](docs/10.nth_element.pdf)
-11. TBD...
+1. [Static, extern](docs/02.static.pdf)
+1. [Motivation](docs/03.motivation.pdf)
+1. [Application linking and execution](docs/04.execution.pdf)
+1. [constexpr](docs/05.constexpr.pdf), [constexpr example](docs/05.constexpr_example.pdf)
+1. [Singleton](docs/06.singletone.pdf)
+1. Objects layout in memory
+1. R-value and move semantics
+1. [Order statistics](docs/10.nth_element.pdf)
+1. TBD...
 
 ## Tasks
 1. [Sqrt](tasks/lc_69_sqrt/README.md)
