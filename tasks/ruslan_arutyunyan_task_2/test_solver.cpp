@@ -58,7 +58,7 @@ int main()
 	}
 
 	// performance tests
-	const int32_t N = 100;
+	const int32_t N = 1000;
 	std::map<std::vector<int32_t>, int32_t> performanceTests;
 
 	performanceTests[getRandomPerfomanceTest(N, 5)] = 5;
@@ -83,19 +83,17 @@ int main()
 	for (const auto& test : performanceTests)
 	{
 		std::cout << i++ << "\t\t\t";
-		std::cout << measure::chrono::execution(count, ctorCall<SimpleSolver>, test.first) << "ms ";
+		std::cout << measure::chrono::execution(count, ctorCall<SimpleSolver>, test.first) << "ms  ";
 		SimpleSolver ss(test.first);
 		std::cout << measure::chrono::execution(count, run, &ss, test.second) << "ms \t\t";
 
-		std::cout << measure::chrono::execution(count, ctorCall<MapLinearSolver>, test.first) << "ms ";
+		std::cout << measure::chrono::execution(count, ctorCall<MapLinearSolver>, test.first) << "ms  ";
 		MapLinearSolver mls(test.first);
 		std::cout << measure::chrono::execution(count, run, &mls, test.second) << "ms \t\t";
 
 		std::cout << measure::chrono::execution(count, ctorCall<MapConstantSolver>, test.first) << "ms ";
 		MapConstantSolver mcs(test.first);
 		std::cout << measure::chrono::execution(count, run, &mcs, test.second) << "ms \t\t\n";
-
-
 	}
 	return 0;
 }
