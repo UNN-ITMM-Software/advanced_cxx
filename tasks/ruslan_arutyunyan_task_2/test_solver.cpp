@@ -23,6 +23,12 @@ std::vector<int32_t> getRandomPerfomanceTest(int32_t elementCount, int32_t sourc
 	return numbers;
 }
 
+template<typename ClassType>
+void ctorCall(const std::vector<int32_t> &array)
+{
+	ClassType instance(array);
+}
+
 int main()
 {
 	// correctness tests
@@ -65,7 +71,7 @@ int main()
 	performanceTests[getRandomPerfomanceTest(N, 22345)] = 22345;
 	performanceTests[getRandomPerfomanceTest(N, 512)] = 512;
 
-	std::cout << "\t\tSimple\t\tMapLinear\tMapConst\t\t\n\n";
+	std::cout << "\t\tSimple\tConstructor\tSolve\t\t\tMapLinear\\tConstructor\tSolve\tMapConst\t\t\tConstructor\tSolve\n\n";
 	const int32_t count = 50;
 
 	auto run = [](std::shared_ptr<ISolver> s, int n) -> int
@@ -77,9 +83,14 @@ int main()
 	for (const auto& test : performanceTests)
 	{
 		std::cout << i++ << "\t\t";
-		std::cout << measure::chrono::execution(count, run, std::shared_ptr<ISolver>(new SimpleSolver(test.first)), test.second) << "ms \t\t"
+		std::cout << measure::chrono::execution(count, ctorCall<SimpleSolver>, test.first) << "ms \t\t"
+			<< measure::chrono::execution(count, run, std::shared_ptr<ISolver>(new SimpleSolver(test.first)), test.second) << "ms \t\t"
+			<< measure::chrono::execution(count, ctorCall<MapLinearSolver>, test.first) << "ms \t\t"
 			<< measure::chrono::execution(count, run, std::shared_ptr<ISolver>(new MapLinearSolver(test.first)), test.second) << "ms \t\t"
+			<< measure::chrono::execution(count, ctorCall<MapConstantSolver>, test.first) << "ms \t\t"
 			<< measure::chrono::execution(count, run, std::shared_ptr<ISolver>(new MapConstantSolver(test.first)), test.second) << "ms \t\t\n";
+
+
 	}
 	return 0;
 }
