@@ -16,7 +16,6 @@ public:
 
 	int32_t solve(int32_t number) override
 	{
-		//Worst case: O((n^2)*log(n))
 		int32_t count{ };
 		auto end{ numbers.cend() };
 		for (auto it = numbers.cbegin(); it != end; ++it)
